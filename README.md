@@ -1,4 +1,11 @@
-# maimon-save-events
+# event_data_logging
+
+**POSSIBLE PACKAGE NAMES**
+
+- event_data_logging
+- json_csv_saver
+- data_saver
+- maimon-data-saver
 
 Save events to json or csv files. This package comes in 4 flavors:
 
@@ -7,40 +14,113 @@ Save events to json or csv files. This package comes in 4 flavors:
 - JSONWriter
 - StampedJSONWriter
 
-## Basic usage
+The StampedWriters will add a leading entry with the current timestamp to your event or line. The default format is in seconds with fraction of a second as decimal numbers. Alternatlively you can save the timestamps as nanoseconds instead.
 
+## Install
+
+Currently the package is still under deveopment, but navigating to the package root directory, you can install with:
+
+    pip install .
+
+Once on github, the package will be installable with :
+
+    pip install git+ssh://git@git.tld/maimonlab/event_data_logger
+
+Once openly released, the following should work :
+
+    pip install git+https://git.tld/maimonlab/event_data_logger
+
+Eventually, we might install it on pypi, then we can simply do
+
+    pip install event_data_logging
+
+## Usage
+
+### JSON example without timestamps
+
+```python
+from event_data_logging.json_saver import JSONWriter
+test_events = [
+    {"bar_color": [1, 2, 3]},
+    {"bar_width_degrees": 10},
+    {"example_float": 0.1},
+]
+filename = "data/json_data.json"
+writer = JSONWriter(filename)
+for event in test_events:
+    writer.save_event(event)
 ```
-    test_events = [
-        {"bar_color": [1, 2, 3]},
-        {"bar_width_degrees": 10},
-        {"example_float": 0.1},
-    ]
-    filename = "data/stamped_json_data.json"
-    writer = StampedJSONWriter(filename)
 
-    for event in test_events:
-        writer.save_event(event)
-
-```
-
-This would result in a file containing the following:
+This would create the file `data/json_data.json` with content:
 
 ```
 [
-{"timestamp": 1661110000123456789, "bar_color": [1, 2, 3]},
-{"timestamp": 1661110010123456789, "bar_width_degrees": 10},
-{"timestamp": 1661110020123456789, "example_float": 0.1}
+{"bar_color": [1, 2, 3]},
+{"bar_width_degrees": 10},
+{"example_float": 0.1}
 ]
+```
+
+### JSON example with timestamp
+
+```python
+from event_data_logging.json_saver import StampedJSONWriter
+test_events = [
+    {"bar_color": [1, 2, 3]},
+    {"bar_width_degrees": 10},
+    {"example_float": 0.1},
+]
+filename = "data/stamped_json_data.json"
+writer = StampedJSONWriter(filename)
+for event in test_events:
+    writer.save_event(event)
+```
+
+This would create the file `data/stamped_json_data.json` with content:
+
+```
+[
+{"timestamp": 1661201947.0682852, "bar_color": [1, 2, 3]},
+{"timestamp": 1661201947.0683577, "bar_width_degrees": 10},
+{"timestamp": 1661201947.0684075, "example_float": 0.1}
+]
+```
+
+### CSV example with nanosecond timestamp
+
+```python
+from event_data_logging.csv_saver import StampedCSVWriter, TimestampModes
+filename = "data/csv_data.csv"
+xyz_header = ["x", "y", "z"]
+csv_writer = StampedCSVWriter(
+    filename, header=xyz_header, timestamp_mode=TimestampModes.NANOSECONDS
+)
+for i in range(3):
+    line = [
+        str(10 * i + 1),
+        str(10 * i + 2),
+        str(10 * i + 3),
+    ]
+    csv_writer.save_line(line)
+```
+
+This will give the file `data/csv_data.csv` with the following content:
+
+```
+timestamp,x,y,z
+1661110000123456789,1,2,3
+1661110001123456789,11,12,13
+1661110002123456789,21,22,23
 ```
 
 ## Developing
 
-    You can run the tests with pytest, and check the coverage. To do so, use the following commands:
+You can run the tests with pytest, and check the coverage. To do so, use the following commands:
 
-        coverage run -m pytest
+    coverage run -m pytest
 
-    The coverage report prints to the terminal with:
+The coverage report prints to the terminal with:
 
-        coverage report
+    coverage report
 
-    This report shows how much of all the code is actually run during the test.
+This report shows how much of all the code is actually run during the test.
