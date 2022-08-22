@@ -18,13 +18,10 @@ The StampedWriters will add a leading entry with the current timestamp to your e
 
 ## Install
 
-Currently the package is still under deveopment, but navigating to the package root directory, you can install with:
+To install from our private github repo : 
 
-    pip install .
+    pip install git+ssh://git@github.com/MaimonLab/event_data_logging.git
 
-Once on github, the package will be installable with :
-
-    pip install git+ssh://git@git.tld/maimonlab/event_data_logger
 
 Once openly released, the following should work :
 
