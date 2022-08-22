@@ -26,7 +26,7 @@ setup(
     packages=["event_data_logging"],
     test_suite="tests",
     install_requires=["numpy", "pyyaml"],
-    tests_require=["pytest"],
+    tests_require=["pytest", "coverage"],
     package_dir={"": "src"},
     url="https://github.com/maimonlab/event_data_logging",
     version="0.1.0",

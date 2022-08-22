@@ -124,3 +124,10 @@ The coverage report prints to the terminal with:
     coverage report
 
 This report shows how much of all the code is actually run during the test.
+
+# ros2_message_handling using outside dependencies
+
+In our lab, this package is mainly used to save ros2 data, and thus turning ros2 messages to dictionaries is very common. The ros2_message_handling module therefore requires some ros2 packages to be installed, and is outside of the scope of most uses.
+
+_The `test_ros2_message_handling.py` will thus fail in environments without ROS2.
+\_We will likely remove this module before the stable release. the ros2_message handling should be integrated in it's own ros packages_
