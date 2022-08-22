@@ -1,0 +1,5 @@
+[
+{"timestamp": 1661110000123456789, "bar_color": [1, 2, 3]},
+{"timestamp": 1661110010123456789, "bar_width_degrees": 10},
+{"timestamp": 1661110020123456789, "example_float": 0.1}
+]
