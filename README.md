@@ -25,7 +25,7 @@ To install from our private github repo :
 
 Once openly released, the following should work :
 
-    pip install git+https://git.tld/maimonlab/event_data_logger
+    pip install git+https://git@github.com/maimonlab/event_data_logging.git
 
 Eventually, we might install it on pypi, then we can simply do
 
