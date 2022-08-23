@@ -28,7 +28,7 @@ Eventually, we might install it on pypi, then we can simply do
 ### JSON example without timestamps
 
 ```python
-from event_data_logging.json_saver import JSONWriter
+from event_data_logging.json_writer import JSONWriter
 test_events = [
     {"bar_color": [1, 2, 3]},
     {"bar_width_degrees": 10},
@@ -53,7 +53,7 @@ This would create the file `data/json_data.json` with content:
 ### JSON example with timestamp
 
 ```python
-from event_data_logging.json_saver import StampedJSONWriter
+from event_data_logging.json_writer import StampedJSONWriter
 test_events = [
     {"bar_color": [1, 2, 3]},
     {"bar_width_degrees": 10},
@@ -78,7 +78,7 @@ This would create the file `data/stamped_json_data.json` with content:
 ### CSV example with nanosecond timestamp
 
 ```python
-from event_data_logging.csv_saver import StampedCSVWriter, TimestampModes
+from event_data_logging.csv_writer import StampedCSVWriter, TimestampModes
 filename = "data/csv_data.csv"
 xyz_header = ["x", "y", "z"]
 csv_writer = StampedCSVWriter(
@@ -125,4 +125,10 @@ _The `test_ros2_message_handling.py` will thus fail in environments without ROS2
 
 Confusion between:
 
-- writer, logging, saver
+- writer, logging, writer
+
+# Developing
+
+To install the testing dependencies, install with
+
+    pip install .[test]

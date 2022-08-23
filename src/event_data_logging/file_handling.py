@@ -5,15 +5,16 @@ Contains:
 """
 
 from pathlib import Path
+from typing import Union
 
 
-def validate_filename(goal_filename: str | Path) -> Path:
+def validate_filename(goal_filename: Union[str, Path]) -> Path:
     """Performs several checks on goal_filename:
         - attempts to create parent folder recursively if it  does not exist
         - if file exists, returns file_path with incremented index.
 
     Args:
-        goal_filename (str | Path)
+        goal_filename (Union[str, Path])
 
     Raises:
         PermissionError: Cannot create desired directory

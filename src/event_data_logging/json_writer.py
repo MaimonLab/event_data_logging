@@ -1,4 +1,4 @@
-"""json_saver.py
+"""json_writer.py
 
 contains classes: 
 - JSONWriter: save dictionaries as entries in json
@@ -11,16 +11,17 @@ import os
 from typing import Dict
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Union
 
 from event_data_logging.file_handling import validate_filename
 
 
 class JSONWriter:
-    def __init__(self, goal_filename: str | Path) -> None:
+    def __init__(self, goal_filename: Union[str, Path]) -> None:
         """jsonwriter
 
         Args:
-            goal_filename (str | Path): Path that needs to be verified before used.
+            goal_filename (Union[str, Path]): Path that needs to be verified before used.
         """
 
         self.filename: Path = validate_filename(goal_filename)
@@ -69,12 +70,12 @@ class TimestampModes:
 
 class StampedJSONWriter(JSONWriter):
     def __init__(
-        self, filename: str | Path, timestamp_mode=TimestampModes.SECONDS
+        self, filename: Union[str, Path], timestamp_mode=TimestampModes.SECONDS
     ) -> None:
         """JSONWriter that adds timestamp entry to dictioanry
 
         Args:
-            goal_filename (str | Path): Path that needs to be verified before used.
+            goal_filename (Union[str, Path]): Path that needs to be verified before used.
             timestamp_mode (int, optional): Set timestamp mode to SECONDS or NANOSECONDS. Defaults to TimestampModes.SECONDS.
         Raises:
             TypeError: TimestampMode is not of correct type, must be int
@@ -127,7 +128,7 @@ class StampedJSONWriter(JSONWriter):
         """
 
         if self._timestamp_mode == TimestampModes.SECONDS:
-            timestamp: int | float = time.time()
+            timestamp: Union[int, float] = time.time()
         else:  #  self._timestamp_mode == TimestampModes.NANOSECONDS:
             timestamp = time.time_ns()
 

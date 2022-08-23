@@ -5,25 +5,26 @@ Contains:
 """
 import numpy as np
 from collections import OrderedDict
+from typing import Union, Tuple
 
 
 def flatten_dictionary(
     partial_dict,
-    input_header: list | None = None,
-    input_data_row: list | None = None,
-    parent_field_name: str | None = None,
-    parent_idx: int | None = None,
-) -> tuple[list, list]:
+    input_header: Union[list, None] = None,
+    input_data_row: Union[list, None] = None,
+    parent_field_name: Union[str, None] = None,
+    parent_idx: Union[int, None] = None,
+) -> Tuple[list, list]:
     """flattens the message by finding all its fields, adding it to the list if float, int, string or array.
     If the field is a sub-message, it will call flatten_recursive on the field.
     the prepend_field builds up the header name, ensuring that the header contains information of prior unpackings.
 
     Args:
         partial_dict (_type_): input dictionary
-        input_header (list | None, optional): list of header items unpacked before this function call. Defaults to None.
-        input_data_row (list | None, optional): list of items unpacked before this function call. Defaults to None.
-        parent_field_name (str | None, optional): header name will be accumulation of parent fields. Defaults to None.
-        parent_idx (int | None, optional): header name will have postfix of index in row. Defaults to None.
+        input_header (Union[list, None], optional): list of header items unpacked before this function call. Defaults to None.
+        input_data_row (Union[list, None], optional): list of items unpacked before this function call. Defaults to None.
+        parent_field_name (Union[str, None], optional): header name will be accumulation of parent fields. Defaults to None.
+        parent_idx (Union[int, None], optional): header name will have postfix of index in row. Defaults to None.
 
     Raises:
         Exception: Dictionary item type not implemented yet. Implemented are int,str,float,dict,list

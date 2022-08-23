@@ -1,4 +1,4 @@
-"""csv_saver.py
+"""csv_writer.py
 Contains classes
 - CSVWriter: save lists as lines in a csv
 - StampedCSVWriter: inherits from CSVWriter, but prepends a timestamp to the list
@@ -7,18 +7,21 @@ Contains classes
 import csv
 import time
 from pathlib import Path
+from typing import Union
 
 from event_data_logging.file_handling import validate_filename
-from event_data_logging.json_saver import TimestampModes
+from event_data_logging.json_writer import TimestampModes
 
 
 class CSVWriter:
-    def __init__(self, goal_filename: str | Path, header: list | None = None):
+    def __init__(
+        self, goal_filename: Union[str, Path], header: Union[list, None] = None
+    ):
         """csv writer constructor
 
         Args:
-            goal_filename (str | Path): Path that needs to be verified before used.
-            header (list | None, optional): If header is known at construction, write it to the file. Defaults to None.
+            goal_filename (Union[str, Path]): Path that needs to be verified before used.
+            header (Union[list, None], optional): If header is known at construction, write it to the file. Defaults to None.
         """
 
         self.filename: Path = validate_filename(goal_filename)
@@ -52,15 +55,15 @@ class CSVWriter:
 class StampedCSVWriter(CSVWriter):
     def __init__(
         self,
-        goal_filename: str | Path,
-        header: list | None = None,
+        goal_filename: Union[str, Path],
+        header: Union[list, None] = None,
         timestamp_mode: int = TimestampModes.SECONDS,
     ):
         """Stamped csv writer constructor. Functions as CSVWriter, but prepends a timestamp
 
         Args:
-            goal_filename (str | Path): Path that needs to be verified before used.
-            header (list | None, optional): if header is available, write it to file in constructor. Defaults to None.
+            goal_filename (Union[str, Path]): Path that needs to be verified before used.
+            header (Union[list, None], optional): if header is available, write it to file in constructor. Defaults to None.
             timestamp_mode (int, optional): Set timestamp mode to SECONDS or NANOSECONDS. Defaults to TimestampModes.SECONDS.
         Raises:
             TypeError: TimestampMode is not of correct type, must be int
@@ -115,7 +118,7 @@ class StampedCSVWriter(CSVWriter):
         """
 
         if self._timestamp_mode == TimestampModes.SECONDS:
-            timestamp: int | float = time.time()
+            timestamp: Union[int, float] = time.time()
         else:
             # self._timestamp_mode == TimestampModes.NANOSECONDS:
             timestamp = time.time_ns()
