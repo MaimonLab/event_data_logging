@@ -78,6 +78,6 @@ def test_StampedCSVWriter_setters():
 
         with pytest.raises(Exception) as e_info:
             csv_writer.timestamp_mode = 3
-        assert str(e_info.value) == "Invalid timestamp integer"
+        assert str(e_info.value) == "timestamp_mode value not in TimestampModes options"
     finally:
         csv_writer.filename.unlink()
