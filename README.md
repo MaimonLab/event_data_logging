@@ -9,19 +9,26 @@ Save events to json or csv files. This package comes in 4 flavors:
 
 The StampedWriters will add a leading entry with the current timestamp to your event or line. The default format is in seconds with fraction of a second as decimal numbers. Alternatlively you can save the timestamps as nanoseconds instead.
 
+Readme content:
+
+- [Install](#install)
+- [Usage](#usage)
+- [Developing](#developing)
+- [ros2 message handling](#rosmessage)
+
+<a name=install></a>
+
 ## Install
 
-To install from our private github repo :
+Install from PYPI
 
-    pip install git+ssh://git@github.com/MaimonLab/event_data_logging.git
+    pip install event_data_logging
 
-Once openly released, the following should work :
+Alternatively, install from github
 
     pip install git+https://git@github.com/maimonlab/event_data_logging.git
 
-Eventually, we might install it on pypi, then we can simply do
-
-    pip install event_data_logging
+<a name=usage></a>
 
 ## Usage
 
@@ -104,6 +111,12 @@ timestamp,x,y,z
 
 ## Developing
 
+<a name=developing></a>
+
+To install the testing dependencies, install with
+
+    pip install -e .[test]
+
 You can run the tests with pytest, and check the coverage. To do so, use the following commands:
 
     coverage run -m pytest
@@ -114,21 +127,21 @@ The coverage report prints to the terminal with:
 
 This report shows how much of all the code is actually run during the test.
 
-# ros2_message_handling using outside dependencies
+### Uploading to pypi
+
+Build the distribution
+
+    python3 -m build
+
+Upload the distribution to pypi
+
+    python3 -m twine upload --repository testpypi dist/* --verbose
+
+<a name=rosmessage></a>
+
+### ros2_message_handling using outside dependencies
 
 In our lab, this package is mainly used to save ros2 data, and thus turning ros2 messages to dictionaries is very common. The ros2_message_handling module therefore requires some ros2 packages to be installed, and is outside of the scope of most uses.
 
 _The `test_ros2_message_handling.py` will thus fail in environments without ROS2.
 \_We will likely remove this module before the stable release. the ros2_message handling should be integrated in it's own ros packages_
-
-# Ideas for name changes
-
-Confusion between:
-
-- writer, logging, writer
-
-# Developing
-
-To install the testing dependencies, install with
-
-    pip install .[test]
