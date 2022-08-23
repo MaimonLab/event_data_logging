@@ -1,25 +1,51 @@
-#!/usr/bin/env python3
+"""data_handling.py 
+
+Contains: 
+    - flatten_dictionar
+"""
 import numpy as np
 from collections import OrderedDict
 
 
 def flatten_dictionary(
-    partial_dict, header=None, data_row=None, parent_field_name=None, parent_idx=None
-):
+    partial_dict,
+    input_header: list | None = None,
+    input_data_row: list | None = None,
+    parent_field_name: str | None = None,
+    parent_idx: int | None = None,
+) -> tuple[list, list]:
     """flattens the message by finding all its fields, adding it to the list if float, int, string or array.
     If the field is a sub-message, it will call flatten_recursive on the field.
     the prepend_field builds up the header name, ensuring that the header contains information of prior unpackings.
+
+    Args:
+        partial_dict (_type_): input dictionary
+        input_header (list | None, optional): list of header items unpacked before this function call. Defaults to None.
+        input_data_row (list | None, optional): list of items unpacked before this function call. Defaults to None.
+        parent_field_name (str | None, optional): header name will be accumulation of parent fields. Defaults to None.
+        parent_idx (int | None, optional): header name will have postfix of index in row. Defaults to None.
+
+    Raises:
+        Exception: Dictionary item type not implemented yet. Implemented are int,str,float,dict,list
+
+    Returns:
+        tuple[list, list]: header, data
     """
 
-    if header is None:
-        header = []
-    if data_row is None:
-        data_row = []
+    if input_header is None:
+        header: list = []
+    else:
+        header = input_header
+
+    if input_data_row is None:
+        data_row: list = []
+    else:
+        data_row = input_data_row
 
     for key, item in partial_dict.items():
 
         if parent_field_name is not None:
-            accumulated_field_name = f"{parent_field_name}_{key}"
+            accumulated_field_name: str = f"{parent_field_name}_{key}"
         else:
             accumulated_field_name = key
 

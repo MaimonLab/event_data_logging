@@ -1,10 +1,11 @@
 import filecmp
-from event_data_logging.csv_saver import CSVWriter, StampedCSVWriter, TimestampModes
+from event_data_logging import CSVWriter, StampedCSVWriter, TimestampModes
 import pytest
 import csv
 
 
 def test_CSVWriter():
+    """Write a file, test if it matches the test_data, and then remove file"""
 
     filename = "data/csv_data.csv"
     header = ["timestamp", "x", "y", "z"]
@@ -22,6 +23,7 @@ def test_CSVWriter():
 
 
 def test_StampedCSVWriter():
+    """Write to a file, and verify that it contains timestamp."""
     filename = "data/csv_data.csv"
     xyz_header = ["x", "y", "z"]
     data_lines = []
@@ -49,6 +51,7 @@ def test_StampedCSVWriter():
 
 
 def test_StampedCSVWriter_setters():
+    """See if timestamp modes can be set correctly, and that errors are raised if not"""
     filename = "data/csv_data.csv"
     header = ["x", "y", "z"]
     csv_writer = StampedCSVWriter(filename, header=header)

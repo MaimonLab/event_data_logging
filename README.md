@@ -1,12 +1,5 @@
 # event_data_logging
 
-**POSSIBLE PACKAGE NAMES**
-
-- event_data_logging
-- json_csv_saver
-- data_saver
-- maimon-data-saver
-
 Save events to json or csv files. This package comes in 4 flavors:
 
 - CSVWriter
@@ -18,10 +11,9 @@ The StampedWriters will add a leading entry with the current timestamp to your e
 
 ## Install
 
-To install from our private github repo : 
+To install from our private github repo :
 
     pip install git+ssh://git@github.com/MaimonLab/event_data_logging.git
-
 
 Once openly released, the following should work :
 
@@ -128,3 +120,9 @@ In our lab, this package is mainly used to save ros2 data, and thus turning ros2
 
 _The `test_ros2_message_handling.py` will thus fail in environments without ROS2.
 \_We will likely remove this module before the stable release. the ros2_message handling should be integrated in it's own ros packages_
+
+# Ideas for name changes
+
+Confusion between:
+
+- writer, logging, saver
