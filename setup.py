@@ -44,6 +44,7 @@ setup(
     description="Data writers with optional timestamps for logging of events",
     license="MIT license",
     long_description=readme,
+    long_description_content_type="text/markdown",
     include_package_data=True,
     name="event_data_logging",
     packages=["event_data_logging"],
