@@ -1,12 +1,5 @@
 # event_data_logging
 
-**POSSIBLE PACKAGE NAMES**
-
-- event_data_logging
-- json_csv_saver
-- data_saver
-- maimon-data-saver
-
 Save events to json or csv files. This package comes in 4 flavors:
 
 - CSVWriter
@@ -18,10 +11,9 @@ The StampedWriters will add a leading entry with the current timestamp to your e
 
 ## Install
 
-To install from our private github repo : 
+To install from our private github repo :
 
     pip install git+ssh://git@github.com/MaimonLab/event_data_logging.git
-
 
 Once openly released, the following should work :
 
@@ -36,7 +28,7 @@ Eventually, we might install it on pypi, then we can simply do
 ### JSON example without timestamps
 
 ```python
-from event_data_logging.json_saver import JSONWriter
+from event_data_logging.json_writer import JSONWriter
 test_events = [
     {"bar_color": [1, 2, 3]},
     {"bar_width_degrees": 10},
@@ -61,7 +53,7 @@ This would create the file `data/json_data.json` with content:
 ### JSON example with timestamp
 
 ```python
-from event_data_logging.json_saver import StampedJSONWriter
+from event_data_logging.json_writer import StampedJSONWriter
 test_events = [
     {"bar_color": [1, 2, 3]},
     {"bar_width_degrees": 10},
@@ -86,7 +78,7 @@ This would create the file `data/stamped_json_data.json` with content:
 ### CSV example with nanosecond timestamp
 
 ```python
-from event_data_logging.csv_saver import StampedCSVWriter, TimestampModes
+from event_data_logging.csv_writer import StampedCSVWriter, TimestampModes
 filename = "data/csv_data.csv"
 xyz_header = ["x", "y", "z"]
 csv_writer = StampedCSVWriter(
@@ -128,3 +120,15 @@ In our lab, this package is mainly used to save ros2 data, and thus turning ros2
 
 _The `test_ros2_message_handling.py` will thus fail in environments without ROS2.
 \_We will likely remove this module before the stable release. the ros2_message handling should be integrated in it's own ros packages_
+
+# Ideas for name changes
+
+Confusion between:
+
+- writer, logging, writer
+
+# Developing
+
+To install the testing dependencies, install with
+
+    pip install .[test]

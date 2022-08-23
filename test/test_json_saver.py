@@ -1,11 +1,12 @@
 import filecmp
-from event_data_logging.json_saver import JSONWriter, StampedJSONWriter, TimestampModes
-
 import json
 import pytest
 
+from event_data_logging import JSONWriter, StampedJSONWriter, TimestampModes
+
 
 def test_JSONWriter():
+    """Write to file and see that it matches the goalfile. Then delete created file"""
     test1 = {
         "timestamp": 1661110000123456789,
         "bar_color": [1, 2, 3],
@@ -26,6 +27,7 @@ def test_JSONWriter():
 
 
 def test_StampedJSONWriter():
+    """Test writing file, and see that it matches. Since timestamps cannot be reproduced, they are set to zero before checking"""
     test_events = [
         {"bar_color": [1, 2, 3]},
         {"bar_width_degrees": 10},
@@ -49,11 +51,20 @@ def test_StampedJSONWriter():
 
         assert saved_json == validate_json
 
+        with pytest.raises(Exception) as e_info:
+            writer = StampedJSONWriter(filename, timestamp_mode=1.2)
+        assert str(e_info.value) == "timestamp mode must be int"
+
+        with pytest.raises(Exception) as e_info:
+            writer = StampedJSONWriter(filename, timestamp_mode=5)
+        assert str(e_info.value) == "Invalid timestamp integer"
+
     finally:
         writer.filename.unlink()
 
 
 def test_StampedJSONWriter_stamp_options():
+    """test if nanosecond writer also works"""
     test_events = [
         {"bar_color": [1, 2, 3]},
         {"bar_width_degrees": 10},
@@ -82,11 +93,7 @@ def test_StampedJSONWriter_stamp_options():
 
 
 def test_StampedJSONWriter_setters():
-    test_events = [
-        {"bar_color": [1, 2, 3]},
-        {"bar_width_degrees": 10},
-        {"example_float": 0.1},
-    ]
+    """test getting and setting if timestamp mode, and see if errors are correctly raised"""
 
     filename = "data/stamped_json_data.json"
     writer = StampedJSONWriter(filename, timestamp_mode=TimestampModes.NANOSECONDS)

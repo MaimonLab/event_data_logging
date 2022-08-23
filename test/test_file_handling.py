@@ -1,10 +1,11 @@
-from event_data_logging.file_handling import validate_filename
-
 from pathlib import Path
 import pytest
 
+from event_data_logging.file_handling import validate_filename
+
 
 def test_validate_filename():
+    """Test if filename is correctly incremented if file exists"""
 
     input_filename = "data/non_existing_file.json"
 
@@ -16,6 +17,7 @@ def test_validate_filename():
 
 
 def test_validate_filename_folders():
+    """test if new folder is created. Folder is removed afterwards"""
 
     filename = "a/testfile"
     try:
@@ -26,6 +28,7 @@ def test_validate_filename_folders():
 
 
 def test_validate_filename_permission_error():
+    """Test that exception is raised of no permission to create parent directory"""
 
     filename = "/temp1/testfile"
 

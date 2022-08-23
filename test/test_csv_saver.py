@@ -1,10 +1,11 @@
 import filecmp
-from event_data_logging.csv_saver import CSVWriter, StampedCSVWriter, TimestampModes
+from event_data_logging import CSVWriter, StampedCSVWriter, TimestampModes
 import pytest
 import csv
 
 
 def test_CSVWriter():
+    """Write a file, test if it matches the test_data, and then remove file"""
 
     filename = "data/csv_data.csv"
     header = ["timestamp", "x", "y", "z"]
@@ -22,6 +23,7 @@ def test_CSVWriter():
 
 
 def test_StampedCSVWriter():
+    """Write to a file, and verify that it contains timestamp."""
     filename = "data/csv_data.csv"
     xyz_header = ["x", "y", "z"]
     data_lines = []
@@ -44,11 +46,23 @@ def test_StampedCSVWriter():
             assert header[1:] == xyz_header
             for line, goal_line in zip(csv_data, data_lines):
                 assert line[1:] == goal_line
+
+        with pytest.raises(Exception) as e_info:
+            csv_writer = StampedCSVWriter(
+                filename, header=xyz_header, timestamp_mode=1.4
+            )
+        assert str(e_info.value) == "timestamp mode must be int"
+
+        with pytest.raises(Exception) as e_info:
+            csv_writer = StampedCSVWriter(filename, header=xyz_header, timestamp_mode=4)
+        assert str(e_info.value) == "timestamp_mode value not in TimestampModes options"
+
     finally:
         csv_writer.filename.unlink()
 
 
 def test_StampedCSVWriter_setters():
+    """See if timestamp modes can be set correctly, and that errors are raised if not"""
     filename = "data/csv_data.csv"
     header = ["x", "y", "z"]
     csv_writer = StampedCSVWriter(filename, header=header)
@@ -75,6 +89,6 @@ def test_StampedCSVWriter_setters():
 
         with pytest.raises(Exception) as e_info:
             csv_writer.timestamp_mode = 3
-        assert str(e_info.value) == "Invalid timestamp integer"
+        assert str(e_info.value) == "timestamp_mode value not in TimestampModes options"
     finally:
         csv_writer.filename.unlink()
