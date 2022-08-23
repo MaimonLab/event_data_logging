@@ -1,7 +1,8 @@
 """file_handling.py
 
 Contains: 
-    - validate_filename: performs checks to see if file and parent directory already exist
+    - validate_filename: performs checks to see if file and parent directory 
+        already exist
 """
 
 from pathlib import Path
@@ -11,7 +12,8 @@ from typing import Union
 def validate_filename(goal_filename: Union[str, Path]) -> Path:
     """Performs several checks on goal_filename:
         - attempts to create parent folder recursively if it  does not exist
-        - if file exists, returns file_path with incremented index.
+        - if file exists, increments a suffix counter until the name is free and
+            returns file_path with incremented index.
 
     Args:
         goal_filename (Union[str, Path])

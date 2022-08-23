@@ -51,6 +51,14 @@ def test_StampedJSONWriter():
 
         assert saved_json == validate_json
 
+        with pytest.raises(Exception) as e_info:
+            writer = StampedJSONWriter(filename, timestamp_mode=1.2)
+        assert str(e_info.value) == "timestamp mode must be int"
+
+        with pytest.raises(Exception) as e_info:
+            writer = StampedJSONWriter(filename, timestamp_mode=5)
+        assert str(e_info.value) == "Invalid timestamp integer"
+
     finally:
         writer.filename.unlink()
 

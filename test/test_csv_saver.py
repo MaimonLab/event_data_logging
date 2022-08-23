@@ -46,6 +46,17 @@ def test_StampedCSVWriter():
             assert header[1:] == xyz_header
             for line, goal_line in zip(csv_data, data_lines):
                 assert line[1:] == goal_line
+
+        with pytest.raises(Exception) as e_info:
+            csv_writer = StampedCSVWriter(
+                filename, header=xyz_header, timestamp_mode=1.4
+            )
+        assert str(e_info.value) == "timestamp mode must be int"
+
+        with pytest.raises(Exception) as e_info:
+            csv_writer = StampedCSVWriter(filename, header=xyz_header, timestamp_mode=4)
+        assert str(e_info.value) == "timestamp_mode value not in TimestampModes options"
+
     finally:
         csv_writer.filename.unlink()
 

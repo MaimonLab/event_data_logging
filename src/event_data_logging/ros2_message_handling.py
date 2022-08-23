@@ -1,7 +1,8 @@
 """ros2_message_handling
 
 Extra utility to turn ros2 messages into a dictionary with custom timestamp format. 
-This module has dependencies outside of the scope of the package, and cannot be run or tested without having ROS2 installed
+This module has dependencies outside of the scope of the package, 
+and cannot be run or tested without having ROS2 installed
 
 This will be removed from the package in the future 
 """

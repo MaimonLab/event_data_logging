@@ -21,7 +21,8 @@ class JSONWriter:
         """jsonwriter
 
         Args:
-            goal_filename (Union[str, Path]): Path that needs to be verified before used.
+            goal_filename (Union[str, Path]): Path that needs to be verified
+                before it is used.
         """
 
         self.filename: Path = validate_filename(goal_filename)
@@ -75,8 +76,10 @@ class StampedJSONWriter(JSONWriter):
         """JSONWriter that adds timestamp entry to dictioanry
 
         Args:
-            goal_filename (Union[str, Path]): Path that needs to be verified before used.
-            timestamp_mode (int, optional): Set timestamp mode to SECONDS or NANOSECONDS. Defaults to TimestampModes.SECONDS.
+            goal_filename (Union[str, Path]): Path that needs to be verified
+                before it is used.
+            timestamp_mode (int, optional): Set timestamp mode to SECONDS or
+                NANOSECONDS. Defaults to TimestampModes.SECONDS.
         Raises:
             TypeError: TimestampMode is not of correct type, must be int
             Exception: value not in TimestampMode  options
@@ -101,7 +104,8 @@ class StampedJSONWriter(JSONWriter):
 
     @timestamp_mode.setter
     def timestamp_mode(self, timestamp_mode: int) -> None:
-        """Set the private _timestamp_mode, verifying the input and raising exceptions if invalid
+        """Set the private _timestamp_mode, dictating the units of the timestamp.
+            First verifies the input and raises exceptions if invalid.
 
         Args:
             timestamp_mode (int): selection from TimestampMode dataclass

@@ -20,8 +20,10 @@ class CSVWriter:
         """csv writer constructor
 
         Args:
-            goal_filename (Union[str, Path]): Path that needs to be verified before used.
-            header (Union[list, None], optional): If header is known at construction, write it to the file. Defaults to None.
+            goal_filename (Union[str, Path]): Path that needs to be verified
+                before it is used.
+            header (Union[list, None], optional): If header is known at
+                construction, write it to the file. Defaults to None.
         """
 
         self.filename: Path = validate_filename(goal_filename)
@@ -59,12 +61,16 @@ class StampedCSVWriter(CSVWriter):
         header: Union[list, None] = None,
         timestamp_mode: int = TimestampModes.SECONDS,
     ):
-        """Stamped csv writer constructor. Functions as CSVWriter, but prepends a timestamp
+        """StampedCSVWriter constructor. Functions as CSVWriter, but prepends a timestamp
 
         Args:
-            goal_filename (Union[str, Path]): Path that needs to be verified before used.
-            header (Union[list, None], optional): if header is available, write it to file in constructor. Defaults to None.
-            timestamp_mode (int, optional): Set timestamp mode to SECONDS or NANOSECONDS. Defaults to TimestampModes.SECONDS.
+            goal_filename (Union[str, Path]): Path that needs to be verified
+                before it is used.
+            header (Union[list, None], optional): if header is available, write
+                it to file in constructor. Defaults to None.
+            timestamp_mode (int, optional): Set timestamp mode to SECONDS or
+                NANOSECONDS. Defaults to TimestampModes.SECONDS. This determines
+                the units of the epoch timestamps in the csv file
         Raises:
             TypeError: TimestampMode is not of correct type, must be int
             Exception: value not in TimestampMode  options
@@ -93,10 +99,11 @@ class StampedCSVWriter(CSVWriter):
 
     @timestamp_mode.setter
     def timestamp_mode(self, timestamp_mode: int) -> None:
-        """Set the private _timestamp_mode, verifying the input and raising exceptions if invalid
+        """Set the private _timestamp_mode, dictating the units of the timestamp.
+            First verifies the input and raises exceptions if invalid.
 
         Args:
-            timestamp_mode (int): selection from TimestampMode dataclass
+            timestamp_mode (int): selection from TimestampMode dataclass.
 
         Raises:
             TypeError: TimestampMode is not of correct type, must be int

@@ -15,19 +15,27 @@ def flatten_dictionary(
     parent_field_name: Union[str, None] = None,
     parent_idx: Union[int, None] = None,
 ) -> Tuple[list, list]:
-    """flattens the message by finding all its fields, adding it to the list if float, int, string or array.
+    """Converts a possibly nested dictionary intto a list of names and a list of values.
+    Flattens the dictionary by finding all its fields,  and gathering their names
+    and data into the output lists if float, int, string or array.
     If the field is a sub-message, it will call flatten_recursive on the field.
-    the prepend_field builds up the header name, ensuring that the header contains information of prior unpackings.
+    the prepend_field builds up the header name, ensuring that the header contains
+    information of prior unpackings.
 
     Args:
         partial_dict (_type_): input dictionary
-        input_header (Union[list, None], optional): list of header items unpacked before this function call. Defaults to None.
-        input_data_row (Union[list, None], optional): list of items unpacked before this function call. Defaults to None.
-        parent_field_name (Union[str, None], optional): header name will be accumulation of parent fields. Defaults to None.
-        parent_idx (Union[int, None], optional): header name will have postfix of index in row. Defaults to None.
+        input_header (Union[list, None], optional): list of header items unpacked
+            before this function call. Defaults to None.
+        input_data_row (Union[list, None], optional): list of items unpacked before
+            this function call. Defaults to None.
+        parent_field_name (Union[str, None], optional): header name will be
+            accumulation of parent fields. Defaults to None.
+        parent_idx (Union[int, None], optional): header name will have postfix
+            of index in row. Defaults to None.
 
     Raises:
-        Exception: Dictionary item type not implemented yet. Implemented are int,str,float,dict,list
+        Exception: Dictionary item type not implemented yet.
+            Implemented are int,str,float,dict,list
 
     Returns:
         tuple[list, list]: header, data
@@ -80,7 +88,8 @@ def flatten_dictionary(
                 for i in range(len(item)):
                     header.append(f"{accumulated_field_name}_{i}")
 
-        # if the item has fields, we need to flatten it more. We call it with the accumulated field name
+        # if the item has fields, we need to flatten it more. We call it
+        # with the accumulated field name
         # elif hasattr(sub_item, "get_fields_and_field_types"):
         elif type(item) in [dict, OrderedDict]:
 
