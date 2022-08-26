@@ -52,6 +52,7 @@ class CSVWriter:
         with open(self.filename, "w") as file:
             writer = csv.writer(file)
             writer.writerow(header_line)
+        self.header_initialized = True
 
 
 class StampedCSVWriter(CSVWriter):

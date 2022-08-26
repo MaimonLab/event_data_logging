@@ -135,7 +135,7 @@ Build the distribution
 
 Upload the distribution to pypi
 
-    python3 -m twine upload --repository testpypi dist/* --verbose
+    python3 -m twine upload --repository pypi dist/* --verbose
 
 <a name=rosmessage></a>
 

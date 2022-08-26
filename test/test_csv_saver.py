@@ -21,6 +21,13 @@ def test_CSVWriter():
     finally:
         csv_writer.filename.unlink()
 
+    csv_writer = CSVWriter(filename)
+    csv_writer.save_header(header)
+    try:
+        assert csv_writer.header_initialized
+    finally:
+        csv_writer.filename.unlink()
+
 
 def test_StampedCSVWriter():
     """Write to a file, and verify that it contains timestamp."""
