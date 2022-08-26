@@ -53,17 +53,21 @@ def flatten_dictionary(
 
     for key, item in partial_dict.items():
 
-        if parent_field_name is not None:
-            accumulated_field_name: str = f"{parent_field_name}_{key}"
+        if parent_field_name is None:
+            key_parent_field_name: Union[str, None] = None
+        elif parent_idx is None:
+            key_parent_field_name = parent_field_name
+        else:  # parent_field_name nor parent_idx is not None
+            key_parent_field_name = f"{parent_field_name}_{parent_idx}"
+
+        if key_parent_field_name is not None:
+            accumulated_field_name: str = f"{key_parent_field_name}_{key}"
         else:
             accumulated_field_name = key
 
         # if the item is a float, int or string, we can simply append
         if isinstance(item, (int, float, str)):
-            if parent_idx is not None:
-                header.append(f"{accumulated_field_name}_{parent_idx}")
-            else:
-                header.append(accumulated_field_name)
+            header.append(accumulated_field_name)
             data_row.append(item)
 
         # if the item is an array, we must unpack it.
@@ -92,7 +96,6 @@ def flatten_dictionary(
         # with the accumulated field name
         # elif hasattr(sub_item, "get_fields_and_field_types"):
         elif type(item) in [dict, OrderedDict]:
-
             header, data_row = flatten_dictionary(
                 item, header, data_row, accumulated_field_name
             )

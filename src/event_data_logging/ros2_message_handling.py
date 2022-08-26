@@ -25,7 +25,7 @@ def convert_ros2_msg_to_nanosecond_stamped_dict(message: Any) -> dict:
     # convert message in our format of dictionary
     ordered_dict: OrderedDict = message_to_ordereddict(message)
     timestamp: int = (
-        ordered_dict["header"]["stamp"]["sec"] * 1e9
+        int(ordered_dict["header"]["stamp"]["sec"] * 1e9)
         + ordered_dict["header"]["stamp"]["nanosec"]
     )
     custom_dict = OrderedDict(
