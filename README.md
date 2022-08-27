@@ -7,7 +7,9 @@ Save events to json or csv files. This package comes in 4 flavors:
 - JSONWriter
 - StampedJSONWriter
 
-The StampedWriters will add a leading entry with the current timestamp to your event or line. The default format is in seconds with fraction of a second as decimal numbers. Alternatlively you can save the timestamps as nanoseconds instead.
+All of these will check if the given filename already exists and add a numerical suffix if it does to give a unused new filename. Additionally, if a filename that includes directories is used, the directories will be created if they don't exist, if possible.
+
+The StampedWriters will add a leading entry with the current [epoch timestamp](https://www.wikiwand.com/en/Epoch_time) to each event or line saved. The default format is in seconds with fraction of a second as decimal numbers. Alternatively you can save the timestamps as nanoseconds instead.
 
 Readme content:
 

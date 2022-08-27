@@ -37,7 +37,7 @@ class CSVWriter:
         """saves list to line in csv
 
         Args:
-            line_to_save (list)
+            line_to_save (list): List of data elements to save as a line.
         """
         with open(self.filename, "a+") as file:
             writer = csv.writer(file)
@@ -47,7 +47,7 @@ class CSVWriter:
         """saves list of header items as line in csv
 
         Args:
-            header_line (list): _description_
+            header_line (list): List of column names for the header.
         """
         with open(self.filename, "w") as file:
             writer = csv.writer(file)
@@ -77,16 +77,13 @@ class StampedCSVWriter(CSVWriter):
             Exception: value not in TimestampMode  options
         """
 
-        if header is not None:
-            header = ["timestamp", *header]
-
         # verify input
         if type(timestamp_mode) != int:
             raise TypeError("timestamp mode must be int")
         if timestamp_mode not in [1, 2]:
             raise Exception(f"timestamp_mode value not in TimestampModes options")
 
-        CSVWriter.__init__(self, goal_filename, header)
+        super().__init__(goal_filename, header)
         self._timestamp_mode: int = timestamp_mode
 
     @property
@@ -134,3 +131,13 @@ class StampedCSVWriter(CSVWriter):
         stamped_data: list = [timestamp, *data]
 
         super().save_line(stamped_data)
+
+    def save_header(self, header_line):
+        """Prepend timestamp column and write csv header
+
+        Args:
+            header_line (list): Header for the csv columns.
+        """
+
+        stamped_header: list = ["timestamp", *header_line]
+        super().save_header(stamped_header)
