@@ -1,7 +1,7 @@
 from pathlib import Path
 import pytest
 
-from src.event_data_logging.file_handling import validate_filename
+from event_data_logging.file_handling import validate_filename
 
 
 def test_validate_filename():

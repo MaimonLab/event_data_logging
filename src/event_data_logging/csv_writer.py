@@ -9,8 +9,8 @@ import time
 from pathlib import Path
 from typing import Union
 
-from src.event_data_logging.file_handling import validate_filename
-from src.event_data_logging.json_writer import TimestampModes
+from event_data_logging.file_handling import validate_filename
+from event_data_logging.json_writer import TimestampModes
 
 
 class CSVWriter:

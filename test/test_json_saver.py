@@ -2,7 +2,7 @@ import filecmp
 import json
 import pytest
 
-from src.event_data_logging import JSONWriter, StampedJSONWriter, TimestampModes
+from event_data_logging import JSONWriter, StampedJSONWriter, TimestampModes
 
 
 def test_JSONWriter():
