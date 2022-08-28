@@ -7,7 +7,7 @@ This file will be removed in the future
 # from collections import OrderedDict
 # from geometry_msgs.msg import TwistStamped
 
-# from event_data_logging.ros2_message_handling import (
+# from src.event_data_logging.ros2_message_handling import (
 #     convert_ros2_msg_to_nanosecond_stamped_dict,
 # )
 

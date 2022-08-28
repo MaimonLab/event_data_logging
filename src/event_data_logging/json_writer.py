@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Union
 
-from event_data_logging.file_handling import validate_filename
+from src.event_data_logging.file_handling import validate_filename
 
 
 class JSONWriter:

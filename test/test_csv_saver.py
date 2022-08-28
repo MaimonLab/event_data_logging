@@ -1,5 +1,5 @@
 import filecmp
-from event_data_logging import CSVWriter, StampedCSVWriter, TimestampModes
+from src.event_data_logging import CSVWriter, StampedCSVWriter, TimestampModes
 import pytest
 import csv
 

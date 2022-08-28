@@ -1,7 +1,7 @@
 from collections import OrderedDict
 import numpy as np
 import pytest
-from event_data_logging.data_handling import flatten_dictionary
+from src.event_data_logging.data_handling import flatten_dictionary
 
 
 def test_flatten_dictionary():
