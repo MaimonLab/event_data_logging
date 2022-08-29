@@ -119,7 +119,3 @@ def test_flatten_ordered_dict():
     assert computed_header == goal_header
 
     assert computed_data == goal_data
-
-
-if __name__ == "__main__":
-    test_flatten_dictionary()

@@ -73,7 +73,7 @@ class StampedJSONWriter(JSONWriter):
     def __init__(
         self, filename: Union[str, Path], timestamp_mode=TimestampModes.SECONDS
     ) -> None:
-        """JSONWriter that adds timestamp entry to dictioanry
+        """JSONWriter that adds timestamp entry to dictionary
 
         Args:
             goal_filename (Union[str, Path]): Path that needs to be verified
