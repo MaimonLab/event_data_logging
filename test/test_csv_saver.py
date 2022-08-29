@@ -2,6 +2,7 @@ import filecmp
 from event_data_logging import CSVWriter, StampedCSVWriter, TimestampModes
 import pytest
 import csv
+import time
 
 
 def test_CSVWriter():
@@ -18,6 +19,13 @@ def test_CSVWriter():
 
     try:
         assert filecmp.cmp("data/csv_data.csv", "test_data/goal_csv_data.csv")
+    finally:
+        csv_writer.filename.unlink()
+
+    csv_writer = CSVWriter(filename)
+    csv_writer.save_header(header)
+    try:
+        assert csv_writer.header_initialized
     finally:
         csv_writer.filename.unlink()
 
@@ -38,7 +46,18 @@ def test_StampedCSVWriter():
             csv_writer.save_line(line)
             data_lines.append(line)
 
-        with open("test_data/goal_csv_data.csv") as csvfile:
+        # save with nanosecond timestamps
+        csv_writer.timestamp_mode = TimestampModes.NANOSECONDS
+        for i in range(3):
+            line = [
+                str(10 * i + 1),
+                str(10 * i + 2),
+                str(10 * i + 3),
+            ]
+            csv_writer.save_line(line)
+            data_lines.append(line)
+
+        with open(csv_writer.filename) as csvfile:
             csv_data = csv.reader(csvfile)
 
             header = next(csv_data)
@@ -46,6 +65,10 @@ def test_StampedCSVWriter():
             assert header[1:] == xyz_header
             for line, goal_line in zip(csv_data, data_lines):
                 assert line[1:] == goal_line
+                if "." in line[0]:
+                    assert abs(float(line[0]) - time.time()) < 0.1
+                else:
+                    assert abs(int(line[0]) - time.time_ns()) < 1e8
 
         with pytest.raises(Exception) as e_info:
             csv_writer = StampedCSVWriter(
@@ -66,8 +89,9 @@ def test_StampedCSVWriter_setters():
     filename = "data/csv_data.csv"
     header = ["x", "y", "z"]
     csv_writer = StampedCSVWriter(filename, header=header)
+    num_lines = 3
     try:
-        for i in range(3):
+        for i in range(num_lines):
             line = [10 * i + 1, 10 * i + 2, 10 * i + 3]
             csv_writer.save_line(line)
 
@@ -75,7 +99,7 @@ def test_StampedCSVWriter_setters():
         csv_writer.timestamp_mode = TimestampModes.SECONDS
         csv_writer.timestamp_mode = TimestampModes.NANOSECONDS
 
-        # savewith different stamps
+        # save with different stamps
         for i in range(3):
             line = [10 * i + 1, 10 * i + 2, 10 * i + 3]
             csv_writer.save_line(line)
