@@ -31,7 +31,6 @@ class CSVWriter:
         self.header_initialized: bool = False
         if header is not None:
             self.save_header(header)
-            self.header_initialized = True
 
     def save_line(self, line_to_save: list) -> None:
         """saves list to line in csv
