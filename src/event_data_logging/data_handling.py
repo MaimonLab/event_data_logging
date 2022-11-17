@@ -72,13 +72,16 @@ def flatten_dictionary(
 
         # if the item is an array, we must unpack it.
         # we'll give it a name of fieldname_0, fieldname_1, ...
-        elif type(item) == np.ndarray:
+        elif isinstance(item, np.ndarray):
             data_row.extend(item.tolist())
             for i in range(len(item)):
                 header.append(f"{accumulated_field_name}_{i}")
 
-        elif type(item) == list:
-            if type(item[0]) in [dict, OrderedDict]:
+        elif isinstance(item, list):
+            if len(item) == 0:
+                header.append(f"{accumulated_field_name}")
+                continue
+            if isinstance(item[0], (dict, OrderedDict)):
                 for i, list_item in enumerate(item):
                     header, data_row = flatten_dictionary(
                         list_item,
@@ -95,7 +98,7 @@ def flatten_dictionary(
         # if the item has fields, we need to flatten it more. We call it
         # with the accumulated field name
         # elif hasattr(sub_item, "get_fields_and_field_types"):
-        elif type(item) in [dict, OrderedDict]:
+        elif isinstance(item, (dict, OrderedDict)):
             header, data_row = flatten_dictionary(
                 item, header, data_row, accumulated_field_name
             )
